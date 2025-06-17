@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("org.jetbrains.kotlin.kapt")
     id("com.google.devtools.ksp")
 }
 
@@ -37,7 +38,9 @@ android {
     }
     buildFeatures {
         compose = true
+        dataBinding = true
     }
+
 }
 
 dependencies {
@@ -46,9 +49,21 @@ dependencies {
     implementation(libs.androidx.room.compiler)
 
     ksp(libs.androidx.room.compiler)
+
+    // DataBinding compiler (runs under KAPT)
+    kapt("androidx.databinding:databinding-compiler:8.10.1")
+
     implementation(libs.androidx.room.ktx)
 
     implementation(libs.kotlinx.coroutines.android)
+
+    // ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    // ViewModel utilities for Compose
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    // LiveData
+    implementation(libs.androidx.lifecycle.livedata.ktx)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

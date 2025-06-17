@@ -12,6 +12,6 @@ data class Contact(
     val contact_id: Int,
 
 
-    val contact_name: String,
-    val contact_email: String
+    var contact_name: String,
+    var contact_email: String
 )
