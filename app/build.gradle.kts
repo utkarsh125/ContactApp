@@ -2,8 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("org.jetbrains.kotlin.kapt")
-    id("com.google.devtools.ksp")
+    id("com.google.devtools.ksp") version "2.1.21-2.0.1"
 }
 
 android {
@@ -30,41 +29,40 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "1.8"
     }
     buildFeatures {
         compose = true
-        dataBinding = true
     }
-
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.15"
+    }
 }
 
 dependencies {
-
+    // Room dependencies - using your catalog versions
     implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.compiler)
-
+    implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
-    // DataBinding compiler (runs under KAPT)
-    kapt("androidx.databinding:databinding-compiler:8.10.1")
-
-    implementation(libs.androidx.room.ktx)
-
+    // Coroutines - using your catalog version
     implementation(libs.kotlinx.coroutines.android)
 
-    // ViewModel
+    // ViewModel - using your catalog versions
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-
-    // ViewModel utilities for Compose
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    // LiveData
+
+    // LiveData - using your catalog version
     implementation(libs.androidx.lifecycle.livedata.ktx)
 
+    // Compose LiveData integration - using your catalog version
+    implementation(libs.androidx.runtime.livedata)
+
+    // Core Android dependencies
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -73,6 +71,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    // Test dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
